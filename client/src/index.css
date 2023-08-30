@@ -1,5 +1,9 @@
+/* font */
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;700&family=Rubik:wght@300;400;500;700&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 *,
 *::before,
@@ -27,6 +31,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.4;
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
