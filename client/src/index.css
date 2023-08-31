@@ -46,3 +46,11 @@ a {
   color:inherit;
   text-decoration: none;
 }
+
+
+/* component classes */
+@layer components {
+  .btn-main {
+    @apply bg-green-500 p-4 text-white rounded-sm;
+  }
+}
