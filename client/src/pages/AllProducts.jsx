@@ -45,7 +45,7 @@ const AllProducts = () => {
               <td>$20</td>
               <td>5</td>
               <td>$100</td>
-              <td className='flex items-center mt-5 relative space-x-2'>
+              <td className='flex items-center mt-5 relative space-x-2 text-gray-600'>
                 <Link to="go to single product"><HiEye/></Link>
                 <Link to="edit product"><HiPencilAlt/></Link>
                 <Link to="delete product"><HiTrash/></Link>
