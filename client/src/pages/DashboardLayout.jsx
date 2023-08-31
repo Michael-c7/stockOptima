@@ -62,8 +62,8 @@ const DashboardLayout = () => {
 
         {/* dropdown */}
         <div>
-          <button className="flex flex-row  items-center bg-gray-200 rounded-full p-1">
-            <img src={avatarImg} alt="user profile photo" className=" rounded-full w-7 h-7 object-cover"/>
+          <button className="flex flex-row items-center bg-gray-200 rounded-full p-1">
+            <img src={avatarImg} alt="user profile photo" className="rounded-full w-7 h-7 object-cover"/>
             <span className=" text-sm mx-1">Johnny</span>
             <div>
               <HiChevronDown/>
@@ -79,7 +79,7 @@ const DashboardLayout = () => {
         <aside className="bg-white min-w-[225px] border-r-2 sm:flex hidden flex-col text-lg py-1">
           {asideNavItems.map(({text, path, icon}, index) => {
               return (
-                <Link to={path} key={index} className="flex flex-row items-center py-2 px-4">
+                <Link to={path} key={index} className="flex flex-row items-center py-2 px-4 text-gray-700">
                   <span className="text-2xl mr-2">{icon}</span>
                   <span className="text-1xl">{text}</span>
                 </Link>
@@ -87,62 +87,13 @@ const DashboardLayout = () => {
             })}
         </aside>
 
-        <main className=" bg-gray-100 w-full p-4">
+        <main className="bg-gray-100 w-full p-4">
           <Outlet/>
         </main>
       </div>
     </div>
   )
 
-  // return (
-  //   // grid-template-rows: auto 1fr;
-  //   <div className=" bg-gray-100 ">
-  //     {/* navbar */}
-  //     <nav className="flex flex-row justify-between items-center px-2 py-4 bg-white border">
-  //       {/* mobile navbar */}
-  //       <button className="text-3xl sm:hidden block">
-  //         <HiMenu/>
-  //       </button>
-  //       {/* desktop logo */}
-  //       <img src={stockOptimaLogo} alt="stockOptima logo" className="w-40 sm:block hidden"/>
-  //       {/* <h2 className=" text-2xl">{currentPage}</h2> */}
-  //       <h2 className=" text-2xl">Dashboard</h2>
-
-  //       {/* dropdown */}
-  //       <div>
-  //         <button className="flex flex-row  items-center bg-gray-200 rounded-full p-1">
-  //           <img src={avatarImg} alt="user profile photo" className=" rounded-full w-7 h-7 object-cover"/>
-  //           <span className=" text-sm mx-1">Johnny</span>
-  //           <div>
-  //             <HiChevronDown/>
-  //           </div>
-  //         </button>
-  //         {/* the dropdown menu */}
-  //         <div className="hidden">
-  //           <button>Logout</button>
-  //         </div>
-  //       </div>
-  //     </nav>
-  //     {/* dashboard main */}
-  //     <div className="flex flex-row h-full">
-  //       {/* side nav */}
-  //       <aside className="sm:flex hidden flex-col bg-text bg-white px-4 pt-2 border-r-2">
-  //         {asideNavItems.map(({text, path, icon}, index) => {
-  //           return (
-  //             <Link to={path} key={index} className="flex flex-row items-center py-2">
-  //               <span className="text-2xl mr-2">{icon}</span>
-  //               <span className="text-1xl">{text}</span>
-  //             </Link>
-  //           )
-  //         })}
-  //       </aside>
-  //       {/* content */}
-  //       <div className="p-4 w-full ">
-  //         <Outlet/>
-  //       </div>
-  //     </div>
-  //   </div>
-  // )
 }
 
 export default DashboardLayout
