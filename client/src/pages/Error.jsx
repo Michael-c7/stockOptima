@@ -22,7 +22,7 @@ const Error = () => {
     <div className="min-h-[100vh] text-center flex flex-col justify-center items-center">
       <img src={serverDown} className="w-[90vw] max-w-[600px]" alt="not found"/>
       <h2 className="text-4xl mt-8">An Error has Occurred.</h2>
-      <p className="text-gray-500 mt-2 mb-4">We apologize for any disruption this may have caused to your experience..</p>
+      <p className="text-gray-500 mt-2 mb-4">We apologize for any disruption this may have caused to your experience.</p>
       <Link to="/" className="btn-main py-4 px-6">Go home</Link>
     </div>
   )
