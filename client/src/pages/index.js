@@ -1,4 +1,4 @@
-//  this file is just to have less code in out App.jsx from importing our routes
+//  this file is just to have less code in our App.jsx from importing our routes
 
 export { default as DashboardLayout } from './DashboardLayout';
 export { default as Landing } from './Landing';
