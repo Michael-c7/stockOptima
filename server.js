@@ -8,6 +8,12 @@ import mongoose from "mongoose"
 // routers
 import productRouter from "./routes/productRouter.js"
 
+// middleware
+import errorHandleMiddleware from "./middleware/errorHandlerMiddleware.js"
+
+
+
+
 
 
 if(process.env.NODE_ENV === "development") {
@@ -34,10 +40,7 @@ app.use("*", (req, res) => {
 })
 
 // used to handle any error that happens during the process of the request
-app.use((err, req, res, next) => {
-    console.log(err)
-    res.status(500).json({msg: "something went wrong"})
-})
+app.use(errorHandleMiddleware)
 
 
 const port = process.env.PORT || 5100
