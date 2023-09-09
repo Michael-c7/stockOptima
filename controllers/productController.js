@@ -23,7 +23,7 @@ export const getAllProducts = async  (req, res) => {
 export const createProduct = async (req, res) => {
     const { name, quantity } = req.body
     const product = await Product.create(req.body)
-    res.status(200).json({product})
+    res.status(StatusCodes.CREATED).json({product})
 }
 
 
@@ -33,13 +33,13 @@ export const createProduct = async (req, res) => {
 export const getProduct = async (req, res) => {
     const { id } = req.params
     // const product = products.find((product) => product.id === id)
-    const product = Product.findById(id)
+    const product = await Product.findById(id)
 
 
     if(!product) {
         return res.status(404).json({ msg: `No product with an id of ${id}` })
     }
-    res.status(200).json({ product })
+    res.status(StatusCodes.OK).json({ product })
 }
 
 
@@ -55,7 +55,7 @@ export const updateProduct = async (req, res) => {
         return res.status(404).json({ msg: `No product with id ${id}` })
     }
 
-    res.status(200).json({ msg: "product updated", product:updatedProduct })
+    res.status(StatusCodes.OK).json({ msg: "product updated", product:updatedProduct })
 }
 
 
@@ -71,5 +71,5 @@ export const deleteProduct = async (req, res) => {
         return res.status(404).json({ msg: `No product with id ${id}` })
     }
 
-    res.status(200).json({ msg: "product removed" })
+    res.status(StatusCodes.OK).json({ msg: "product removed" })
 }
