@@ -7,11 +7,8 @@ const productSchema = new mongoose.Schema(
         price:Number,
         quantity:Number,
         value:Number,
-        inStock:{
-            type: Boolean,
-            default:true,
-        },
         description:String,
+        SKU:String,
     },
     { timestamps: true }
 )

@@ -5,12 +5,16 @@ const app = express()
 import morgan from "morgan"
 import mongoose from "mongoose"
 
+
+// import { validateTest } from "./middleware/validationMiddleware.js"
+
+
+
 // routers
 import productRouter from "./routes/productRouter.js"
 
 // middleware
 import errorHandleMiddleware from "./middleware/errorHandlerMiddleware.js"
-
 
 
 
@@ -26,10 +30,13 @@ app.get("/", (req, res) => {
     res.send("hello world!")
 })
 
-app.post("/", (req, res) => {
-    console.log(req)
-    res.json({ message: "data received", data:req.body })
-})
+// app.post("/api/v1/test",
+// validateTest,
+//  (req, res) => {
+//     const { name } = req.body
+//     console.log(req)
+//     res.json({ message: `hello ${name}` })
+// })
 
 
 app.use("/api/v1/products", productRouter)
