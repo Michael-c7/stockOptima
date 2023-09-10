@@ -12,6 +12,8 @@ import mongoose from "mongoose"
 
 // routers
 import productRouter from "./routes/productRouter.js"
+import authRouter from "./routes/authRouter.js"
+
 
 // middleware
 import errorHandleMiddleware from "./middleware/errorHandlerMiddleware.js"
@@ -39,7 +41,12 @@ app.get("/", (req, res) => {
 // })
 
 
+// base route for products
 app.use("/api/v1/products", productRouter)
+// base route for auth
+app.use("/api/v1/auth", authRouter)
+
+
 
 // used when a request to a route doesn't exist
 app.use("*", (req, res) => {
