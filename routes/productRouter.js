@@ -8,7 +8,7 @@ import {
     updateProduct,
     deleteProduct,
  } from "../controllers/productController.js"
-import { validateProductInput } from "../middleware/validationMiddleware.js"
+import { validateProductInput, validateIdParam } from "../middleware/validationMiddleware.js"
 
 
  router.route("/")
@@ -16,8 +16,8 @@ import { validateProductInput } from "../middleware/validationMiddleware.js"
     .post(validateProductInput, createProduct)
 
  router.route("/:id")
-    .get(getProduct)
-    .patch(validateProductInput, updateProduct)
-    .delete(deleteProduct)
+    .get(validateIdParam, getProduct)
+    .patch(validateProductInput,validateIdParam , updateProduct)
+    .delete(validateIdParam, deleteProduct)
 
 export default router
