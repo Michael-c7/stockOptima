@@ -12,6 +12,7 @@ let products = [
 
 
 export const getAllProducts = async  (req, res) => {
+    console.log(req.user)
     const products = await Product.find({})
 
     res.status(StatusCodes.OK).json({products})
