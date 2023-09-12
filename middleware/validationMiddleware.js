@@ -1,5 +1,5 @@
 import { body, param , validationResult } from "express-validator"
-import { BadRequestError, NotFoundError } from "../errors/customError.js"
+import { BadRequestError, NotFoundError, UnauthorizedError } from "../errors/customError.js"
 import mongoose from "mongoose"
 import Product from "../models/ProductModel.js"
 import User from "../models/UserModel.js"
@@ -15,9 +15,16 @@ const withValidationErrors = (validationValues) => {
                 if(errorMessages[0].startsWith("no product")) {
                     throw new NotFoundError(errorMessages)
                 }
+
+                if(errorMessages[0].startsWith("not authorized")) {
+                    throw new UnauthorizedError("not authorized to access this route")
+                }
                 // return res.status(400).json({ errors: errorMessages })
                 throw new BadRequestError(errorMessages)
             }
+
+
+                
             next()
         },
     ]
@@ -46,13 +53,17 @@ export const validateProductInput = withValidationErrors([
 // if custom return true, goes to the controller, if false get message about invalid mongoDB id
 export const validateIdParam = withValidationErrors([
     param("id")
-        .custom(async (value) => {
+        .custom(async (value, { req }) => {
             const isValidId = mongoose.Types.ObjectId.isValid(value)
             if(!isValidId) throw new BadRequestError("invalid mongoDb id")
 
             const product = await Product.findById(value)
 
             if(!product) throw new NotFoundError(`no product with an id of ${value}`)
+            
+            const isAdmin = req.user.role === "admin"
+            const isOwner = req.user.userId === product.createdBy.toString()
+            if(!isAdmin && !isOwner) throw new UnauthorizedError("not authorized to access this route")
         })
 ])
 
