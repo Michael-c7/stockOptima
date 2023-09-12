@@ -5,30 +5,29 @@ import Product from "../models/ProductModel.js"
 import User from "../models/UserModel.js"
 
 
-const withValidationErrors = (validationValues) => {
+const withValidationErrors = (validateValues) => {
     return [
-        validationValues,
-        (req, res, next) => {
-            const errors = validationResult(req)
-            if(!errors.isEmpty()) {
-                const errorMessages = errors.array().map((error) => error.msg)
-                if(errorMessages[0].startsWith("no product")) {
-                    throw new NotFoundError(errorMessages)
-                }
-
-                if(errorMessages[0].startsWith("not authorized")) {
-                    throw new UnauthorizedError("not authorized to access this route")
-                }
-                // return res.status(400).json({ errors: errorMessages })
-                throw new BadRequestError(errorMessages)
-            }
-
-
-                
-            next()
-        },
-    ]
-}
+      validateValues,
+      (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          const errorMessages = errors.array().map((error) => error.msg);
+  
+          const firstMessage = errorMessages[0];
+          console.log(Object.getPrototypeOf(firstMessage));
+          if (errorMessages[0].startsWith('no job')) {
+            throw new NotFoundError(errorMessages);
+          }
+          if (errorMessages[0].startsWith('not authorized')) {
+            throw new UnauthorizedError('not authorized to access this route');
+          }
+          throw new BadRequestError(errorMessages);
+        }
+        next();
+      },
+    ];
+  };
+  
 
 // export const validateTest = withValidationErrors([
 //     body("name")

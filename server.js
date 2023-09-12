@@ -4,7 +4,7 @@ import express from "express"
 const app = express()
 import morgan from "morgan"
 import mongoose from "mongoose"
-import { authenticatedUser } from "./middleware/authMiddleware.js"
+import { authenticateUser } from "./middleware/authMiddleware.js"
 import cookieParser from "cookie-parser"
 // import { validateTest } from "./middleware/validationMiddleware.js"
 
@@ -44,7 +44,7 @@ app.get("/", (req, res) => {
 
 
 // base route for products
-app.use("/api/v1/products", authenticatedUser, productRouter)
+app.use("/api/v1/products", authenticateUser, productRouter)
 // base route for auth
 app.use("/api/v1/auth", authRouter)
 
