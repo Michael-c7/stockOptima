@@ -9,6 +9,10 @@ const productSchema = new mongoose.Schema(
         value:Number,
         description:String,
         SKU:String,
+        createdBy: {
+            type: mongoose.Types.ObjectId,
+            ref: 'User',
+          },
     },
     { timestamps: true }
 )
