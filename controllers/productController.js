@@ -1,21 +1,12 @@
-import "express-async-errors"
-
 import Product from "../models/ProductModel.js"
-import { nanoid } from "nanoid"
 import { StatusCodes } from "http-status-codes"
 
 
-let products = [
-    {id:nanoid(), name:"apple", quantity:2},
-    {id:nanoid(), name:"grape", quantity:23}
-]
-
 
 export const getAllProducts = async  (req, res) => {
-    console.log(req.user)
-    const products = await Product.find({})
+    const products = await Product.find({createdBy:req.user.userId})
 
-    res.status(StatusCodes.OK).json({products})
+    res.status(StatusCodes.OK).json({ products })
 }
 
 
@@ -23,10 +14,11 @@ export const getAllProducts = async  (req, res) => {
 
 
 export const createProduct = async (req, res) => {
-    const { name, quantity } = req.body
-    const product = await Product.create(req.body)
+    req.body.createdBy = req.user.userId
 
-    res.status(StatusCodes.CREATED).json({product})
+
+    const product = await Product.create(req.body)
+    res.status(StatusCodes.CREATED).json({ product })
 }
 
 
