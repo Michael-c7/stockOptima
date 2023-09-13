@@ -13,6 +13,7 @@ import cookieParser from "cookie-parser"
 // routers
 import productRouter from "./routes/productRouter.js"
 import authRouter from "./routes/authRouter.js"
+import userRouter from "./routes/userRouter.js"
 
 
 // middleware
@@ -47,6 +48,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/products", authenticateUser, productRouter)
 // base route for auth
 app.use("/api/v1/auth", authRouter)
+app.use("/api/v1/users", authenticateUser, userRouter)
 
 
 
