@@ -9,6 +9,6 @@ router.get("/admin-app-stats", [
     authorizePermissions("admin"),
     getApplicationStats
 ])
-router.patch("/update-user", validateUpdateUserInput ,updateUser)
+router.patch("/update-user", validateUpdateUserInput, updateUser)
 
 export default router
