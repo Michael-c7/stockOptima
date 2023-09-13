@@ -43,6 +43,10 @@ app.get("/", (req, res) => {
 //     res.json({ message: `hello ${name}` })
 // })
 
+app.get("/api/v1/test", (req, res) => {
+    res.json({ msg:"test route" })
+})
+
 
 // base route for products
 app.use("/api/v1/products", authenticateUser, productRouter)
