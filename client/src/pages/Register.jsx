@@ -1,6 +1,6 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import {  Link } from "react-router-dom"
 import InputContainer from "../../components/InputContainer"
+
 
 
 const Register = () => {
@@ -9,6 +9,7 @@ const Register = () => {
       <form method="post" action="/register" className="bg-white px-4 py-6 w-[90vw] max-w-sm drop-shadow-sm">
         <h1 className="text-4xl mb-8 font-light capitalize">Register</h1>
         <InputContainer type="text" name="name" labelText="name" />
+        <InputContainer type="email" name="email" labelText="email" />
         <InputContainer type="password" name="password" labelText="password" />
 
         <button type="submit" className="btn-main w-full">Submit</button>
