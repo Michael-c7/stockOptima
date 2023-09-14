@@ -1,7 +1,6 @@
 import React from "react"
-import { Link, Outlet } from "react-router-dom"
-
-
+import { Link, Outlet, redirect, useLoaderData } from "react-router-dom"
+import customFetch from "../../utils/customFetch"
 import { 
   HiChartBar,
   HiUserCircle,
@@ -9,14 +8,27 @@ import {
   HiFolderOpen,
 } from "react-icons/hi"
 
+export const loader = async () => {
+  try {
+    const { data } = await customFetch.get("users/current-user")
+    return data
+  } catch (error) {
+    return redirect("/")
+  }
+}
+
 import avatarImg from "../assets/images/avatar-1.jpg"
 import Navbar from "../../components/Navbar";
 
 import Sidebar from "../../components/Sidebar.jsx"
 
 
+
 const DashboardLayout = () => {
-  const user = {name: "Johnny"}
+  const { user } = useLoaderData()
+
+
+  // const user = {name: "Johnny"} // temp
 
   const logoutUser = async () => {
     console.log("logout user")
@@ -45,8 +57,6 @@ const DashboardLayout = () => {
       icon:<HiUserCircle/>,
     },
   ]
-  
-
 
   return (
     <div className="grid grid-rows-[100px_minmax(800px,_1fr)] h-screen">
@@ -54,7 +64,7 @@ const DashboardLayout = () => {
       <div className="flex flex-row">
         <Sidebar sidebarNavItems={sidebarNavItems}/>         
         <main className="bg-gray-100 w-full p-4">
-          <Outlet/>
+          <Outlet context={{ user }}/>
         </main>
       </div>
     </div>
