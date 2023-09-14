@@ -1,6 +1,8 @@
 import React from "react"
-import { Link, Outlet, redirect, useLoaderData } from "react-router-dom"
+import { Link, Outlet, redirect, useLoaderData, useNavigate } from "react-router-dom"
 import customFetch from "../../utils/customFetch"
+import { toast } from 'react-toastify';
+
 import { 
   HiChartBar,
   HiUserCircle,
@@ -26,12 +28,12 @@ import Sidebar from "../../components/Sidebar.jsx"
 
 const DashboardLayout = () => {
   const { user } = useLoaderData()
-
-
-  // const user = {name: "Johnny"} // temp
+  const navigate = useNavigate()
 
   const logoutUser = async () => {
-    console.log("logout user")
+    navigate("/")
+    await customFetch.get("/auth/logout")
+    toast.success("Logging out...")
   }
 
   
