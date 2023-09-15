@@ -12,7 +12,9 @@ const UserSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Types.ObjectId,
         ref: "User",
-    }
+    },
+    avatar: String,
+    avatarPublicId:String,
 })
 
 UserSchema.methods.toJSON = function() {
