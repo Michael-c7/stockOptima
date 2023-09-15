@@ -7,26 +7,39 @@ import mongoose from "mongoose"
 import { authenticateUser } from "./middleware/authMiddleware.js"
 import cookieParser from "cookie-parser"
 // import { validateTest } from "./middleware/validationMiddleware.js"
-
-
-
+import {v2 as cloudinary} from 'cloudinary';
 // routers
 import productRouter from "./routes/productRouter.js"
 import authRouter from "./routes/authRouter.js"
 import userRouter from "./routes/userRouter.js"
+
+// public
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 
 // middleware
 import errorHandleMiddleware from "./middleware/errorHandlerMiddleware.js"
 
 
+          
+cloudinary.config({ 
+  cloud_name: process.env.CLOUD_NAME, 
+  api_key: process.env.CLOUD_API_KEY, 
+  api_secret: process.env.CLOUD_API_SECRET
+});
 
 
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
 if(process.env.NODE_ENV === "development") {
     app.use(morgan("dev"))
 }
+
+app.use(express.static(path.resolve(__dirname, './public')));
 app.use(cookieParser())
 app.use(express.json())
 
