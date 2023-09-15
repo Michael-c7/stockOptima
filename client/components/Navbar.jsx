@@ -1,10 +1,8 @@
-// import React from "react"
+import React from "react"
 import { Link } from "react-router-dom"
 
 import stockOptimaLogo from "../src/assets/images/StockOptima-black.svg"
 import { Menu } from '@headlessui/react'
-
-
 
 import { 
   HiMenu,
@@ -12,7 +10,7 @@ import {
   HiOutlineX,
 } from "react-icons/hi"
 
-import avatarImg from "../src/assets/images/default-user.jpg"
+import defaultUserImage from "../src/assets/images/default-user.jpg"
 
 const Navbar = ({ user, logoutUser, sidebarNavItems }) => {
 
@@ -57,7 +55,7 @@ const Navbar = ({ user, logoutUser, sidebarNavItems }) => {
     {/* user dropdown */}
     <Menu>
       <Menu.Button className="flex flex-row items-center bg-gray-200 rounded-full p-1">
-        <img src={avatarImg} alt="user profile photo" className="rounded-full w-7 h-7 object-cover"/>
+        <img src={user.avatar ? user.avatar : defaultUserImage} alt="user profile photo" className="rounded-full w-7 h-7 object-cover"/>
         <span className="text-sm mx-1">{user?.name || "User"}</span>
         <div>
           <HiChevronDown/>
