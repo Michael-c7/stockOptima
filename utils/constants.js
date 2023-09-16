@@ -4,3 +4,6 @@ export const JOB_SORT_BY = {
     ASCENDING:"a-z",
     DESCENDING:"z-a",
 }
+
+
+export const MAX_IMAGE_SIZE_IN_BYTES = 500000
