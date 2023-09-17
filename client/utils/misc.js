@@ -26,3 +26,16 @@ export const SKUGenerator = (...inputs) => {
 
   return result
 }
+
+
+/**
+ * 
+ * @param {String} property - eg: item.name
+ * @param {Number} textLimitInCharacters default is 15
+ * @returns 
+ */
+export const truncateStringWithEllipsis = (property, textLimitInCharacters = 100) => (
+  property.length > textLimitInCharacters
+  ? `${property.slice(0, textLimitInCharacters)}...`
+  : property
+)
