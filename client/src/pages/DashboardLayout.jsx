@@ -26,6 +26,9 @@ import Sidebar from "../../components/Sidebar.jsx"
 
 
 
+const DashboardContext = React.createContext();
+
+
 const DashboardLayout = () => {
   const { user } = useLoaderData()
   const navigate = useNavigate()
@@ -61,6 +64,12 @@ const DashboardLayout = () => {
   ]
 
   return (
+  <DashboardContext.Provider
+    value={{
+      user,
+      logoutUser,
+    }}
+  >
     <div className="grid grid-rows-[100px_minmax(800px,_1fr)] h-screen">
       <Navbar user={user} logoutUser={logoutUser} sidebarNavItems={sidebarNavItems}/>
       <div className="flex flex-row">
@@ -70,8 +79,11 @@ const DashboardLayout = () => {
         </main>
       </div>
     </div>
+  </DashboardContext.Provider>
   )
-
 }
+
+export const useDashboardContext = () => React.useContext(DashboardContext);
+
 
 export default DashboardLayout

@@ -1,41 +1,59 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Form, Link, useNavigation, useOutletContext, redirect } from "react-router-dom"
 import InputContainer from "../../components/InputContainer"
 
-import testImg from "../assets/images/avatar-2.jpg"
+import customFetch from "../../utils/customFetch"
+import { toast } from "react-toastify"
+import SubmitBtn from "../../components/SubmitBtn"
+import { SKUGenerator } from "../../utils/misc"
+
+
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const initialData = Object.fromEntries(formData);
+
+  const data = {
+    ...initialData,
+     SKU: SKUGenerator(
+            initialData?.name,
+            initialData?.category,
+            initialData?.location,
+            initialData?.price,
+          ), 
+     value: Number(initialData?.price) * Number(initialData?.quantity),
+  }
+
+  try {
+    await customFetch.post('/products', data);
+    toast.success('product added successfully');
+    return redirect('allProducts');
+  } catch (error) {
+    toast.error(error?.response?.data?.msg);
+    return error;
+  }
+}
+
+
 
 const AddProduct = () => {
-  let isImageShown = false
+  const { user } = useOutletContext()
 
   return (
-    <section className="flex flex-col ">
-      <form method="post" action="/register" className="bg-white px-4 py-6 w-[90vw] max-w-sm drop-shadow-sm">
-        {/* product image container */}
-        <div>
-          <h2 className="text-lg">Product Image</h2>
-          <p className=" text-xs mb-2">Supported Formats: jpg, jpeg, png</p>
-          <div className="border flex items-center p-2">
-          <input type="file" id="myFile" name="filename" className=" p-1 mr-2"/>
-          </div>
-          {/* actual image that user selects here */}
-          {isImageShown ? ( 
-            <img src={testImg} alt="image name here" className="border border-t-0"/>
-            ) : (
-            <p className="my-2">No image chosen</p>
-            )}
-        </div>
-        
+    <section className="flex flex-col">
+      <Form method="post" className="bg-white px-4 py-6 w-[90vw] max-w-sm drop-shadow-sm">
         <InputContainer type="text" name="name" labelText="name" />
         <InputContainer type="text" name="category" labelText="category" />
         <InputContainer type="text" name="price" labelText="price" />
         <InputContainer type="text" name="quantity" labelText="quantity" />
+        <InputContainer type="text" name="location" labelText="location" />
         <div className="flex flex-col text-left my-4">
           <label htmlFor="description" className='font-light capitalize mb-1'>Description</label>
           <textarea id="description" name="description" className="border rounded border-gray-200 p-1 w-full" rows="5"></textarea>
         </div>
 
-        <button type="submit" className="btn-main w-full">Add Product</button>
-      </form>
+        <SubmitBtn {...{defaultText: "Add Product", submittingText: "Adding Product..."}}/>
+      </Form>
     </section>
   )
 }

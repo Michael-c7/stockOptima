@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema(
         value:Number,
         description:String,
         SKU:String,
+        location:String,
         createdBy: {
             type: mongoose.Types.ObjectId,
             ref: 'User',

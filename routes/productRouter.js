@@ -9,7 +9,9 @@ import {
     deleteProduct,
  } from "../controllers/productController.js"
 import { validateProductInput, validateIdParam } from "../middleware/validationMiddleware.js"
+import upload from "../middleware/multerMiddleware.js"
 
+//  upload.single("productImage") <-- for the post and patch routes
 
  router.route("/")
     .get(getAllProducts)

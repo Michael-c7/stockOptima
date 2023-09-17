@@ -18,12 +18,26 @@ import {
   Profile,
   Admin,
   EditProduct,
+  SingleProduct,
 } from './pages';
 
 
 import { action as registerAction } from "./pages/Register"
 import { action as loginAction } from "./pages/Login"
 import { loader as dashboardLoader } from './pages/DashboardLayout';
+import { action as addProductAction } from './pages/AddProduct';
+import { loader as allProductsLoader } from './pages/AllProducts';
+
+import { action as editProductAction } from './pages/EditProduct';
+import { loader as editProductLoader } from './pages/EditProduct';
+
+import { loader as singleProductLoader } from './pages/SingleProduct';
+
+import { action as profileAction } from './pages/Profile';
+
+import { action as deleteProductAction } from './pages/DeleteProduct';
+
+
 
 
 const router = createBrowserRouter([
@@ -54,6 +68,7 @@ const router = createBrowserRouter([
           {
             index:true,
             element:<AddProduct/>,
+            action:addProductAction,
           },
           {
             path:"stats",
@@ -62,19 +77,29 @@ const router = createBrowserRouter([
           {
             path:"allProducts",
             element: <AllProducts/>,
+            loader: allProductsLoader,
           },
           {
             path:"profile",
             element: <Profile/>,
+            action:profileAction,
           },
           {
             path:"admin",
             element: <Admin/>,
           },
           {
-            path:"editProduct",
+            path:"editProduct/:id",
             element: <EditProduct/>,
+            loader:editProductLoader,
+            action:editProductAction,
           },
+          {
+            path:"singleProduct/:id",
+            element: <SingleProduct/>,
+            loader:singleProductLoader,
+          },
+          { path: 'deleteProduct/:id', action: deleteProductAction },
         ]
       },
     ],

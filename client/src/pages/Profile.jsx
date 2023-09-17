@@ -1,11 +1,11 @@
 import React from "react"
 import { Form, useOutletContext } from "react-router-dom"
 import InputContainer from "../../components/InputContainer"
-
-import { toast } from "react-toastify"
-import customFetch from "../../utils/customFetch"
 import FileInputContainer from "../../components/FileInputContainer"
 import SubmitBtn from "../../components/SubmitBtn"
+import { toast } from "react-toastify"
+import customFetch from "../../utils/customFetch"
+import { MAX_IMAGE_SIZE_IN_BYTES } from "../../../utils/constants"
 
 
 
@@ -13,7 +13,7 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
 
   const file = formData.get('avatar');
-  if (file && file.size > 500000) {
+  if (file && file.size > MAX_IMAGE_SIZE_IN_BYTES) {
     toast.error('Image size too large');
     return null;
   }
@@ -35,7 +35,7 @@ const Profile = () => {
     <section className="flex flex-col">
       <Form method="post" className="bg-white px-4 py-6 w-[90vw] max-w-sm drop-shadow-sm" encType='multipart/form-data'>
         {/* profile image container */}
-        <FileInputContainer {...{ titleText:"Profile Image", maxSizeForImagesInBytes:500000, inputName:"avatar" }}/>
+        <FileInputContainer {...{ titleText:"Profile Image", maxSizeForImagesInBytes:MAX_IMAGE_SIZE_IN_BYTES, inputName:"avatar" }}/>
         
         <InputContainer type="text" name="name" labelText="name" defaultValue={user?.name}/>
         <InputContainer type="email" name="email" labelText="email" defaultValue={user?.email} />

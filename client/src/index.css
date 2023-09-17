@@ -53,4 +53,8 @@ a {
   .btn-main {
     @apply bg-green-500 p-4 text-white rounded-sm;
   }
+
+  .btn-secondary {
+    @apply p-4 border-2 border-green-500 text-green-500 rounded-sm;
+  }
 }
