@@ -1,4 +1,4 @@
-export const JOB_SORT_BY = {
+export const PRODUCT_SORT_BY = {
     NEWEST_FIRST:"newest",
     OLDEST_FIRST:"oldest",
     ASCENDING:"a-z",
