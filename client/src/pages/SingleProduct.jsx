@@ -5,6 +5,10 @@ import { Link, redirect, useLoaderData } from 'react-router-dom'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc';
 import DeleteProductModal from '../../components/DeleteProductModal'
+import { addCommasToNumber } from '../../utils/misc'
+
+
+
 
 dayjs.extend(utc); // Enable UTC plugin for proper handling of the provided UTC date
 
@@ -30,18 +34,18 @@ const SingleProduct = () => {
 
   return (
     <div>
-        <h2 className=' text-3xl'>Product Details</h2>
+        <h2 className='text-3xl'>Product Details</h2>
         <div className='my-4 mx-4 space-y-4 text-lg'>
-            <p>name: {product.name}</p>
-            <p>category: {product.category}</p>
-            <p>price: ${product.price}</p>
-            <p>quantity: {product.quantity}</p>
-            <p>total value: ${product.value}</p>
+            <p>Name: {product.name}</p>
+            <p>Category: {product.category}</p>
+            <p>Price: ${addCommasToNumber(product.price)}</p>
+            <p>Quantity: {addCommasToNumber(product.quantity)}</p>
+            <p>Total Value: ${addCommasToNumber(product.value)}</p>
             <p>location: {product.location}</p>
             <p>SKU: {product.SKU}</p>
             <p>Description: {product.description}</p>
-            <p>created at: {dateCreated}</p>
-            <p>date updated: {dateUpdated}</p>
+            <p>Created At: {dateCreated}</p>
+            <p>Date Updated: {dateUpdated}</p>
             <div className='space-x-4 h-full'>
               <Link className='btn-main' to={`/dashboard/editProduct/${product._id}`}>
               Edit product
