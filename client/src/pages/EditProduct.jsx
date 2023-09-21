@@ -51,6 +51,7 @@ const EditProduct = () => {
   return (
     <section className="flex flex-col ">
       <Form method="post" className="bg-white px-4 py-6 w-[90vw] max-w-sm drop-shadow-sm">
+        <h2 className="text-2xl">Edit Product</h2>
         <InputContainer type="text" name="name" labelText="name" defaultValue={product.name}/>
         <InputContainer type="text" name="category" labelText="category" defaultValue={product.category}/>
         <InputContainer type="text" name="price" labelText="price" defaultValue={product.price}/>
@@ -61,7 +62,7 @@ const EditProduct = () => {
           <textarea id="description" name="description" className="border rounded border-gray-200 p-1 w-full" rows="5" defaultValue={product.description}></textarea>
         </div>
 
-        <SubmitBtn {...{defaultText: "Edit Product", submittingText: "Editing Product..."}}/>
+        <SubmitBtn {...{defaultText: "Update Product", submittingText: "Updating Product..."}}/>
       </Form>
     </section>
   )

@@ -42,6 +42,7 @@ const AddProduct = () => {
   return (
     <section className="flex flex-col">
       <Form method="post" className="bg-white px-4 py-6 w-[90vw] max-w-sm drop-shadow-sm">
+        <h2 className="text-2xl">Create Product</h2>
         <InputContainer type="text" name="name" labelText="name" />
         <InputContainer type="text" name="category" labelText="category" />
         <InputContainer type="text" name="price" labelText="price" />
