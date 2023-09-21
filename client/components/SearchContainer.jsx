@@ -9,6 +9,10 @@ import { PRODUCT_SORT_BY } from '../../utils/constants'
 import MinMaxInputRange from './MinMaxInputRange'
 import CombinedSearchInput from './CombinedSearchInput'
 
+import { Form, useSubmit, Link } from 'react-router-dom'
+import SubmitBtn from './SubmitBtn'
+
+
 
 const SearchContainer = () => {
   let searchCategories = [
@@ -20,14 +24,52 @@ const SearchContainer = () => {
   ]
 
 
+  const [searchInput, setSearchInput] = React.useState("")
+  const [combinedInput, setCombinedInput] = React.useState([{
+    name:true,
+    category:false,
+    location:false,
+    sku:false,
+    description:false,
+  }])
 
+  const [sortInput, setSortInput] = React.useState("newest")
+
+
+
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+
+    setCombinedInput((prevCheckboxes) => ({
+      ...prevCheckboxes,
+      [name]: checked,
+    }));
+  };
+
+
+  React.useEffect(() => {
+    console.log(sortInput)
+  },[ sortInput])
+
+
+  const submit = useSubmit()
+
+  React.useEffect(() => {
+    // console.log(searchInput)
+    submit({search:searchInput, sort:sortInput})
+  }, [searchInput, sortInput])
 
   return (
-    <form className='pb-4 flex flex-col relative'>
+    <Form className='pb-4 flex flex-col relative'>
       {/* search input */}
-        <div className='flex items-center border rounded border-gray-200 p-2 rounded-r-none'>
+
+        <div className='flex  justify-between items-center space-x-6'>
+        <div className='flex items-center border rounded border-gray-200 p-2 rounded-r-none flex-1'>
           <FiSearch className=' text-gray-400 mr-1 relative'/>
-          <input placeholder='Search' className='w-full outline-0'/>
+          <input placeholder='Search' name="search" className='w-full outline-0' defaultValue={searchInput} onChange={(e) => setSearchInput(e.target.value)}/>
+        </div>
+        <Link to="/dashboard/allProducts" className='btn-main py-2 px-3'>Reset search values</Link>
         </div>
         {/* container for filter icon / text & filters */}
         <div className='flex lg:flex-row flex-col lg:items-center items-start  mt-4'>
@@ -41,7 +83,7 @@ const SearchContainer = () => {
             {/* Combined Search*/}
             <Popover className="relative border rounded border-gray-200 p-2 rounded-r-none">
                 <Popover.Button className="flex justify-between items-center w-full">
-                  <span>Combined Search</span>
+                  <span>Text Search includes</span>
                   <HiChevronDown className='text-lg'/>
                 </Popover.Button>
               <Popover.Panel className="absolute z-10 bg-white p-4 shadow-md top-12 space-y-4 w-full">
@@ -51,7 +93,7 @@ const SearchContainer = () => {
                 {searchCategories.map((item, index) => {
                   let capitalizeFirstLetterString = item[0].toUpperCase() + item.slice(1);
                   return (
-                    <CombinedSearchInput {...{item: capitalizeFirstLetterString, itemId:item}} key={index}/>
+                    <CombinedSearchInput {...{item: capitalizeFirstLetterString, itemId:item, value:combinedInput, onChangeFunction:handleCheckboxChange, checked:combinedInput.item }} key={index}/>
                   )
                 })}
               </Popover.Panel>
@@ -111,14 +153,14 @@ const SearchContainer = () => {
                 {Object.entries(PRODUCT_SORT_BY).map(([key, value]) => {
                   let capitalizeFirstLetterString = value[0].toUpperCase() + value.slice(1);
                   return (
-                    <CombinedSearchInput {...{item: capitalizeFirstLetterString, inputType:"radio", itemId:"productSort"}} key={key}/>
+                    <CombinedSearchInput {...{item: capitalizeFirstLetterString, inputType:"radio", itemId:"sort", checked:sortInput === value ? true : false ,onChangeFunction:(e) => setSortInput(e.target.value.toLowerCase())}} key={key}/>
                   )
                 })}
                 </Popover.Panel>
             </Popover>
           </div>
         </div>
-    </form>
+    </Form>
   )
 }
 
