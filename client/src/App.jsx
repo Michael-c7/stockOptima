@@ -84,10 +84,10 @@ const router = createBrowserRouter([
             element: <Profile/>,
             action:profileAction,
           },
-          {
-            path:"admin",
-            element: <Admin/>,
-          },
+          // {
+          //   path:"admin",
+          //   element: <Admin/>,
+          // },
           {
             path:"editProduct/:id",
             element: <EditProduct/>,
