@@ -53,7 +53,7 @@ const SingleProduct = () => {
 
               <DeleteProductModal {...{isDeleteProductModalOpen, setDeleteProductModalIsOpen, _id:product._id}}/>
               
-              <button className='btn-secondary' onClick={() => setDeleteProductModalIsOpen(true)}>Delete</button>
+              <button className='btn-secondary py-3' onClick={() => setDeleteProductModalIsOpen(true)}>Delete</button>
             </div>
         </div>
     </div>
