@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 import Product from "../models/ProductModel.js"
 import { StatusCodes } from "http-status-codes"
-import dayjs from "dayjs"
+import day from "dayjs"
 
 
 
@@ -149,41 +149,52 @@ export const showStats = async (req, res) => {
         }
       }
     ])
-
+    // get the data we want
     stats = {
-      totalStoreValue: stats[0].totalStoreStats[0].totalStoreValue,
-      totalProducts: stats[0].totalStoreStats[0].totalProducts,
-      allCategories: stats[0].categoryStats[0].allCategories,
-      outOfStock: stats[0].outOfStockStats[0].outOfStock
+      totalStoreValue: stats[0].totalStoreStats[0]?.totalStoreValue || 0,
+      totalProducts: stats[0].totalStoreStats[0]?.totalProducts || 0,
+      allCategories: stats[0].categoryStats[0]?.allCategories || 0,
+      outOfStock: stats[0].outOfStockStats[0]?.outOfStock || 0
     }
+
+
 
     const defaultStats = {
-        totalProducts:stats.totalProducts || 0,
-        totalStoreValue: stats.totalStoreValue || 0,
-        outOfStock:stats.outOfStock || 0,
-        allCategories:stats.allCategories || 0,
+        totalProducts:stats.totalProducts,
+        totalStoreValue: stats.totalStoreValue,
+        outOfStock:stats.outOfStock,
+        allCategories:stats.allCategories,
     }
 
-    console.log(defaultStats)
 
-
-
-    let monthlyApplications = [
-        {
-            date:"May 23",
-            count: 12,
+    let productsCreatedByMonth  = await Product.aggregate([
+      { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
+      {
+        $group: {
+          _id: { year: { $year: '$createdAt' }, month: { $month: '$createdAt' } },
+          count: { $sum: 1 },
         },
-        {
-            date:"Jun 23",
-            count: 12,
-        },
-        {
-            date:"Jul 23",
-            count: 12,
-        },
-    ]
+      },
+      { $sort: { '_id.year': -1, '_id.month': -1 } },
+      { $limit: 6 },
+    ])
+    // get the data we want
+    productsCreatedByMonth  = productsCreatedByMonth 
+    .map((item) => {
+      const {
+        _id: { year, month },
+        count,
+      } = item;
+
+      const date = day()
+        .month(month - 1)
+        .year(year)
+        .format('MMM YY');
+      return { date, count };
+    })
+    .reverse();
 
 
-    res.status(StatusCodes.OK).json({defaultStats, monthlyApplications})
+    res.status(StatusCodes.OK).json({defaultStats, productsCreatedByMonth })
 }
 
