@@ -37,6 +37,7 @@ import { action as profileAction } from './pages/Profile';
 
 import { action as deleteProductAction } from './pages/DeleteProduct';
 
+import { loader as statsLoader } from './pages/Stats';
 
 
 
@@ -73,6 +74,7 @@ const router = createBrowserRouter([
           {
             path:"stats",
             element: <Stats/>,
+            loader:statsLoader,
           },
           {
             path:"allProducts",
