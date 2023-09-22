@@ -1,5 +1,7 @@
+import mongoose from "mongoose"
 import Product from "../models/ProductModel.js"
 import { StatusCodes } from "http-status-codes"
+import dayjs from "dayjs"
 
 
 
@@ -87,3 +89,101 @@ export const deleteProduct = async (req, res) => {
 
     res.status(StatusCodes.OK).json({ msg: "product removed" })
 }
+
+
+
+
+export const showStats = async (req, res) => {
+
+    let stats = await Product.aggregate([
+      {
+        $facet: {
+          // Calculate totalStoreValue and totalProducts
+          "totalStoreStats": [
+            {
+              $group: {
+                _id: null,
+                totalStoreValue: { $sum: "$value" },
+                totalProducts: { $sum: 1 }
+              }
+            }
+          ],
+          // Get count of categories
+          "categoryStats": [
+            {
+              $group: {
+                _id: null,
+                categories: { $addToSet: "$category" },
+                allCategories: { $sum: 1 }
+              }
+            },
+            { $unwind: "$categories" },
+            {
+              $group: {
+                _id: null,
+                allCategories: { $sum: 1 }
+              }
+            }
+          ],
+          // Calculate outOfStock
+          "outOfStockStats": [
+            {
+              $match: {
+                createdBy: new mongoose.Types.ObjectId(req.user.userId), // Filter by createdBy ObjectId
+                quantity: { $lt: 1 } // Match documents with quantity less than 1
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                outOfStock: { $sum: 1 }
+              }
+            },
+            {
+              $project: {
+                _id: 0,
+                outOfStock: 1
+              }
+            }
+          ]
+        }
+      }
+    ])
+
+    stats = {
+      totalStoreValue: stats[0].totalStoreStats[0].totalStoreValue,
+      totalProducts: stats[0].totalStoreStats[0].totalProducts,
+      allCategories: stats[0].categoryStats[0].allCategories,
+      outOfStock: stats[0].outOfStockStats[0].outOfStock
+    }
+
+    const defaultStats = {
+        totalProducts:stats.totalProducts || 0,
+        totalStoreValue: stats.totalStoreValue || 0,
+        outOfStock:stats.outOfStock || 0,
+        allCategories:stats.allCategories || 0,
+    }
+
+    console.log(defaultStats)
+
+
+
+    let monthlyApplications = [
+        {
+            date:"May 23",
+            count: 12,
+        },
+        {
+            date:"Jun 23",
+            count: 12,
+        },
+        {
+            date:"Jul 23",
+            count: 12,
+        },
+    ]
+
+
+    res.status(StatusCodes.OK).json({defaultStats, monthlyApplications})
+}
+
