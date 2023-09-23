@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useLoaderData } from 'react-router-dom'
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom'
 
 
 import {
@@ -15,11 +15,9 @@ import ProductContainer from '../../components/ProductContainer'
 
 
 export const loader = async ({ request }) => {
-  console.log(request.url)
   const params = Object.fromEntries([
     ...new URL(request.url).searchParams.entries(),
-  ]);
-  console.log(params)
+  ])
 
 
   try {
@@ -34,11 +32,25 @@ export const loader = async ({ request }) => {
 }
 
 const AllProducts = () => {
-  // let testArr = Array.from({ length:5 })
-  let testPageArr = Array.from({ length:5 })
-
+  
   const { data, searchValues } = useLoaderData()
-  const { products } = data
+  const { products, totalProducts, currentPage, numOfPages } = data
+  
+  let numOfPagesArr = Array.from({ length:numOfPages })
+  
+
+  const {search, pathname} = useLocation()
+  const navigate = useNavigate()
+  // console.log({search, pathname})
+
+  const handlePageChange = (pageNumber) => {
+    // reconstruct the url w/ our sort, filters and path now with the page add onto that to make a request to the server /w all my other stuff still intact
+    const searchParams = new URLSearchParams(search)
+    searchParams.set("page", pageNumber)
+    navigate(`${pathname}?${searchParams.toString()}`)
+
+    console.log(pageNumber)
+  }
 
   return (
     <>
@@ -74,16 +86,19 @@ const AllProducts = () => {
 
         {/* FOOTER */}
         <footer className='pt-14 pb-2 flex flex-row justify-between items-center text-gray-500'>
-          <p>Showing 1 - 10 of 148 entries</p>
-          <div className='flex flex-row items-center'>
-            <button className='text-2xl bg-gray-100 mr-2'><HiChevronLeft/></button>
-            {testPageArr.map((el, index) => {
-              return (
-                <button key={index} className='mx-2'>{index + 1}</button>
-              )
-            })}
-            <button className='text-2xl bg-gray-100 ml-2'><HiChevronRight/></button>
-          </div>
+          <p>Showing 1 - {products.length} of {totalProducts} entries</p>
+          {numOfPages > 1 && (
+            <div className='flex flex-row items-center'>
+              <button className='text-2xl bg-gray-100 mr-2 rounded' onClick={() => handlePageChange(currentPage <= 1 ? 1 : currentPage - 1)}><HiChevronLeft/></button>
+              {numOfPagesArr.map((_, index) => {
+                return (
+                  <button key={index} className={`mx-1 px-2 hover:bg-gray-100 rounded ${currentPage === (index + 1) && "bg-green-500 text-white hover:bg-green-500"}`} onClick={() => handlePageChange(index + 1)}>{index + 1}</button>
+                )
+              })}
+              <button className='text-2xl bg-gray-100 ml-2 rounded' onClick={() => handlePageChange(currentPage >= numOfPages ? numOfPages : currentPage + 1)}><HiChevronRight/></button>
+            </div>
+          )}
+
         </footer>
       </section>
       )}
