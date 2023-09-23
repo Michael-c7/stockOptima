@@ -46,7 +46,7 @@ const SearchContainer = ({ products, maxValuesForFilters }) => {
   }, [searchInput, sortInput, priceInput, quantityInput, valueInput])
 
 
-  console.log(maxValuesForFilters[0].maxValue)
+
   return (
     <Form className='pb-4 flex flex-col relative'>
       {/* search input */}
@@ -55,7 +55,7 @@ const SearchContainer = ({ products, maxValuesForFilters }) => {
             <FiSearch className='text-gray-400 mr-1 relative'/>
             <input placeholder='Search' name="search" className='w-full outline-0' defaultValue={searchInput} onChange={(e) => setSearchInput(e.target.value)}/>
           </div>
-          <Link to="/dashboard/allProducts" className='btn-main py-2 px-3'>Reset search values</Link>
+          <Link to="/dashboard/allProducts" className='btn-main py-2 px-3' onClick={() => setSearchInput("")}>Reset all values</Link>
         </div>
         {/* container for filter icon / text & filters */}
         <div className='flex lg:flex-row flex-col lg:items-center items-start mt-4'>
@@ -73,7 +73,7 @@ const SearchContainer = ({ products, maxValuesForFilters }) => {
                   <HiChevronDown className='text-lg'/>
                 </Popover.Button>
                 <Popover.Panel className="absolute z-10 bg-white p-4 shadow-md top-12 left-0">
-                  <RangeInput {...{rangeName:"Price", id:"price", value: priceInput, onChange:SetPriceInput, maxValue:maxValuesForFilters[0].maxPrice}}/>
+                  <RangeInput {...{rangeName:"Price", id:"price", value: priceInput, onChange:SetPriceInput, maxValue:maxValuesForFilters[0]?.maxPrice || 0}}/>
                 </Popover.Panel>
             </Popover>
 
@@ -85,7 +85,7 @@ const SearchContainer = ({ products, maxValuesForFilters }) => {
                   <HiChevronDown className='text-lg'/>
                 </Popover.Button>
                 <Popover.Panel className="absolute z-10 bg-white p-4 shadow-md top-12 left-0">
-                  <RangeInput {...{rangeName:"Quantity", id:"quantity", value: quantityInput, onChange:SetQuantityInput, maxValue:maxValuesForFilters[0].maxQuantity}}/>
+                  <RangeInput {...{rangeName:"Quantity", id:"quantity", value: quantityInput, onChange:SetQuantityInput, maxValue:maxValuesForFilters[0]?.maxQuantity || 0}}/>
                 </Popover.Panel>
             </Popover>
 
@@ -97,7 +97,7 @@ const SearchContainer = ({ products, maxValuesForFilters }) => {
                   <HiChevronDown className='text-lg'/>
                 </Popover.Button>
                 <Popover.Panel className="absolute z-10 bg-white p-4 shadow-md top-12 left-0">
-                  <RangeInput {...{rangeName:"Value", id:"value", value: valueInput, onChange:SetValueInput, maxValue:maxValuesForFilters[0].maxValue}}/>
+                  <RangeInput {...{rangeName:"Value", id:"value", value: valueInput, onChange:SetValueInput, maxValue:maxValuesForFilters[0]?.maxValue || 0}}/>
                 </Popover.Panel>
             </Popover>
 
