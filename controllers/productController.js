@@ -7,7 +7,6 @@ import day from "dayjs"
 
 export const getAllProducts = async  (req, res) => {
     const { search, sort, price, quantity, value } = req.query
-    console.log(price)
     const queryObject = {
         createdBy:req.user.userId,
     }
@@ -37,7 +36,6 @@ export const getAllProducts = async  (req, res) => {
     }
 
 
-
     const sortOptions = {
         newest:"-createdAt",
         oldest:"createdAt",
@@ -58,7 +56,31 @@ export const getAllProducts = async  (req, res) => {
     const totalProducts = await Product.countDocuments(queryObject)
     const numOfPages = Math.ceil(totalProducts / limit)
 
-    res.status(StatusCodes.OK).json({ totalProducts, numOfPages, currentPage:page, products })
+
+
+
+    let maxValuesForFilters = await Product.aggregate([
+      { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
+      {
+        $group: {
+          _id: null,
+          maxPrice: { $max: "$price" },       // Find the highest price
+          maxQuantity: { $max: "$quantity" }, // Find the highest quantity
+          maxValue: { $max: { $multiply: ["$price", "$quantity"] } } // Find the highest value (price * quantity)
+        }
+      },
+      {
+        $project: {
+          _id: 0, // Exclude the _id field from the result
+          maxPrice: 1,
+          maxQuantity: 1,
+          maxValue: 1
+        }
+      }
+    ])
+
+
+    res.status(StatusCodes.OK).json({ totalProducts, numOfPages, currentPage:page, products, maxValuesForFilters })
 }
 
 
@@ -287,9 +309,6 @@ export const showStats = async (req, res) => {
         }
       }
     ])
-
-    // NEED TO ADD CHECK FOR EMPTY VALUES FOR THE CHART DATA
-
 
 
 
