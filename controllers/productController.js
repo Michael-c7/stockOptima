@@ -112,6 +112,7 @@ export const deleteProduct = async (req, res) => {
 export const showStats = async (req, res) => {
 
     let stats = await Product.aggregate([
+      { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
       {
         $facet: {
           // Calculate totalStoreValue and totalProducts
@@ -217,6 +218,7 @@ export const showStats = async (req, res) => {
 
     // get the top 5 categories
     let popularCategories = await Product.aggregate([
+      { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
       {
         $group: {
           _id: "$category",
@@ -245,6 +247,7 @@ export const showStats = async (req, res) => {
 
 
     let highestQuantityProducts = await Product.aggregate([
+      { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
       {
         $sort: {
           quantity: -1 // Sort in descending order based on the quantity field
@@ -267,6 +270,7 @@ export const showStats = async (req, res) => {
 
 
     let lowestQuantityProducts = await Product.aggregate([
+      { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
       {
         $sort: {
           quantity: 1 // Sort in ascending order based on the quantity field
@@ -285,6 +289,15 @@ export const showStats = async (req, res) => {
     ])
 
     // NEED TO ADD CHECK FOR EMPTY VALUES FOR THE CHART DATA
+
+
+
+
+
+
+
+
+
 
 
 
