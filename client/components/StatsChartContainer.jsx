@@ -17,27 +17,27 @@ import {
 
 // put all the charts here
 const StatsChartContainer = ({selectedChart, chartData}) => {
-
-
+    let chartHeightInPixels = 450
 
   return (
     <div>
         {/* top 5 categories */}
-        {selectedChart === "mostPopularCategories" ? 
+        {chartData.popularCategories.length < 1 && selectedChart === "mostPopularCategories" && <h2 className=" text-3xl text-center my-12">No data available...</h2>}
+        {selectedChart === "mostPopularCategories" && chartData.popularCategories.length > 0 ? 
             (
                 <div className="w-[98%] relative ml-[1%]">
-                    <PieChart width={1000} height={400}>
-                        <Pie
-                            dataKey="count"
-                            data={chartData.popularCategories.map(item => ({ name: item.category, count: item.count }))} // change category to name because names work by default in the name prop and category doesn't, and I'd have to do a bunch of extra for if I didn't do it this way
-                            cx={800}
-                            cy={200}
-                            innerRadius={100}
-                            outerRadius={170}
-                            fill="#22C55E"
-                        />
-                        <Tooltip />
-                    </PieChart>
+                    <ResponsiveContainer width='100%' height={chartHeightInPixels}>
+                        <PieChart  height={chartHeightInPixels}>
+                            <Pie
+                                dataKey="count"
+                                data={chartData.popularCategories.map(item => ({ name: item.category, count: item.count }))} // change category to name because names work by default in the name prop and category doesn't, and I'd have to do a bunch of extra for if I didn't do it this way
+                                innerRadius={120}
+                                outerRadius={180}
+                                fill="#22C55E"
+                            />
+                            <Tooltip />
+                        </PieChart>
+                    </ResponsiveContainer>
                 </div>
             ) : ("")
         }
@@ -46,10 +46,11 @@ const StatsChartContainer = ({selectedChart, chartData}) => {
 
 
         {/* Monthly Products Created */}
-        {selectedChart === "monthlyProducts" ? 
+        {chartData.productsCreatedByMonth.length < 1 && selectedChart === "monthlyProducts" && <h2 className=" text-3xl text-center my-12">No data available...</h2>}
+        {selectedChart === "monthlyProducts" && chartData.productsCreatedByMonth.length > 0 ? 
             (
                 <div className="w-[98%] relative ml-[1%]">
-                    <ResponsiveContainer width='100%' height={450}>
+                    <ResponsiveContainer width='100%' height={chartHeightInPixels}>
                         <AreaChart data={chartData.productsCreatedByMonth} margin={{ top: 50 }}>
                             <CartesianGrid strokeDasharray='3 3' />
                             <XAxis dataKey='date' />
@@ -68,10 +69,11 @@ const StatsChartContainer = ({selectedChart, chartData}) => {
 
 
         {/* Highest Quantity products */}
-        {selectedChart === "highestQuantityProducts" ? 
+        {chartData.highestQuantityProducts.length < 1 && selectedChart === "highestQuantityProducts" && <h2 className=" text-3xl text-center my-12">No data available...</h2>}
+        {selectedChart === "highestQuantityProducts" && chartData.highestQuantityProducts.length > 0 ? 
         (
             <div className="w-[98%] relative ml-[1%]">
-                <ResponsiveContainer width='100%' height={450}>
+                <ResponsiveContainer width='100%' height={chartHeightInPixels}>
                     <BarChart width={150} height={40} data={chartData.highestQuantityProducts}>
                     <XAxis dataKey="name" />
                     <YAxis />
@@ -88,16 +90,17 @@ const StatsChartContainer = ({selectedChart, chartData}) => {
 
 
         {/* Lowest Quantity products */}
-        {selectedChart === "lowestQuantityProducts" ? 
+        {chartData.lowestQuantityProducts.length < 1 && selectedChart === "lowestQuantityProducts" && <h2 className=" text-3xl text-center my-12">No data available...</h2>}
+        {selectedChart === "lowestQuantityProducts" && chartData.lowestQuantityProducts.length > 0 ? 
         (
             <div className="w-[98%] relative ml-[1%]">
-                <ResponsiveContainer width='100%' height={450}>
+                <ResponsiveContainer width='100%' height={chartHeightInPixels}>
                     <BarChart width={150} height={40} data={chartData.lowestQuantityProducts}>
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="quantity" fill="#5523CC" />
+                    <Bar dataKey="quantity" fill="#5523CC" /> 
                     </BarChart>
                 </ResponsiveContainer>
             </div>
