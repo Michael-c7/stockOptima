@@ -6,14 +6,12 @@ import day from "dayjs"
 
 
 export const getAllProducts = async  (req, res) => {
-    const { search, sort } = req.query
-    console.log(req.query)
+    const { search, sort, price, quantity, value } = req.query
+    console.log(price)
     const queryObject = {
         createdBy:req.user.userId,
     }
 
-    /*For filter need to setup / figure out how to do price,
-    value ect ranges and setup / figure out how to do text search includes */
     if(search) {
         // only add if it exists
         queryObject.$or = [
@@ -21,6 +19,24 @@ export const getAllProducts = async  (req, res) => {
             { category: { $regex:search, $options:"i" } },
         ]
     }
+
+
+    // price filter (dynamic price from req.query)
+    if (price && parseFloat(price) > 0) {
+      queryObject.price = { $gt: parseFloat(price) };
+    }
+
+    // quantity filter (dynamic quantity from req.query)
+    if (quantity && parseFloat(quantity) > 0) {
+      queryObject.quantity = { $gt: parseFloat(quantity) };
+    }
+
+    // value filter (dynamic value from req.query)
+    if (value && parseFloat(value) > 0) {
+      queryObject.value = { $gt: parseFloat(value) };
+    }
+
+
 
     const sortOptions = {
         newest:"-createdAt",
