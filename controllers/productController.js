@@ -167,6 +167,7 @@ export const showStats = async (req, res) => {
     }
 
 
+
     let productsCreatedByMonth  = await Product.aggregate([
       { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
       {
@@ -195,6 +196,90 @@ export const showStats = async (req, res) => {
     .reverse();
 
 
-    res.status(StatusCodes.OK).json({defaultStats, productsCreatedByMonth })
+
+
+
+    // get the top 5 categories
+    let popularCategories = await Product.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $sort: {
+          count: -1 // Sort in descending order based on the count
+        }
+      },
+      {
+        $limit: 5 // Get only the top 5 categories
+      }
+    ])
+    // get the data we want
+    popularCategories = popularCategories.map(({_id, count}) => {
+      return {
+        category:_id,
+        count,
+      }
+    })
+
+
+
+
+
+    let highestQuantityProducts = await Product.aggregate([
+      {
+        $sort: {
+          quantity: -1 // Sort in descending order based on the quantity field
+        }
+      },
+      {
+        $limit: 10 // Get the top 10 products with the highest quantity
+      },
+      {
+        $project: {
+          _id: 0, // Exclude the _id field from the result
+          name: 1, // Include the name field in the result
+          quantity: 1 // Include the quantity field in the result
+        }
+      }
+    ])
+
+
+
+
+
+    let lowestQuantityProducts = await Product.aggregate([
+      {
+        $sort: {
+          quantity: 1 // Sort in ascending order based on the quantity field
+        }
+      },
+      {
+        $limit: 10 // Get the top 10 products with the lowest quantity
+      },
+      {
+        $project: {
+          _id: 0, // Exclude the _id field from the result
+          name: 1, // Include the name field in the result
+          quantity: 1 // Include the quantity field in the result
+        }
+      }
+    ])
+
+    // NEED TO ADD CHECK FOR EMPTY VALUES FOR THE CHART DATA
+
+
+
+    res.status(StatusCodes.OK).json({
+      defaultStats,
+      chartData:{
+        productsCreatedByMonth,
+        popularCategories,
+        highestQuantityProducts,
+        lowestQuantityProducts,
+      }
+    })
 }
 
