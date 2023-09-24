@@ -7,19 +7,24 @@ import {
     createProduct,
     updateProduct,
     deleteProduct,
+    showStats,
  } from "../controllers/productController.js"
+ 
 import { validateProductInput, validateIdParam } from "../middleware/validationMiddleware.js"
 import upload from "../middleware/multerMiddleware.js"
+import { checkForDemoUser } from "../middleware/authMiddleware.js"
 
-//  upload.single("productImage") <-- for the post and patch routes
 
  router.route("/")
     .get(getAllProducts)
-    .post(validateProductInput, createProduct)
+    .post(checkForDemoUser, validateProductInput, createProduct)
+
+
+ router.route("/stats").get(showStats)
 
  router.route("/:id")
     .get(validateIdParam, getProduct)
-    .patch(validateProductInput,validateIdParam , updateProduct)
-    .delete(validateIdParam, deleteProduct)
+    .patch(checkForDemoUser, validateProductInput, validateIdParam , updateProduct)
+    .delete(checkForDemoUser, validateIdParam, deleteProduct)
 
 export default router
