@@ -50,7 +50,7 @@ const AddProduct = () => {
         <InputContainer type="text" name="location" labelText="location" />
         <div className="flex flex-col text-left my-4">
           <label htmlFor="description" className='font-light capitalize mb-1'>Description</label>
-          <textarea id="description" name="description" className="border rounded border-gray-200 p-1 w-full" rows="5"></textarea>
+          <textarea id="description" name="description" className="border rounded border-gray-200 p-1 w-full resize-none" rows="5"></textarea>
         </div>
 
         <SubmitBtn {...{defaultText: "Add Product", submittingText: "Adding Product..."}}/>
