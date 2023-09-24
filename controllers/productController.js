@@ -58,7 +58,7 @@ export const getAllProducts = async  (req, res) => {
 
 
 
-
+    // get the highest price, quantity and value
     let maxValuesForFilters = await Product.aggregate([
       { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
       {
@@ -309,12 +309,6 @@ export const showStats = async (req, res) => {
         }
       }
     ])
-
-
-
-
-
-
 
 
 

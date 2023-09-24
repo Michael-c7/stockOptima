@@ -103,7 +103,7 @@ const Stats = () => {
 
   let [selected, setSelected] = useState(people[0])
 
-  console.log(selected)
+  // console.log(selected)
 
 
   return (

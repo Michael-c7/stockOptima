@@ -17,7 +17,7 @@ const ProductContainer = ({item, index}) => {
   let textLimitInCharacters = 15
   let [isDeleteProductModalOpen, setDeleteProductModalIsOpen] = React.useState(false)
 
-  addCommasToNumber
+  
   return (
     <tr className='w-full border-b-2'>
         <td className=' px-2'>{index + 1}</td>
