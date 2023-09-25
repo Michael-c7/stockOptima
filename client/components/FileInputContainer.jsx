@@ -12,8 +12,11 @@ const FileInputContainer = ({ titleText, maxSizeForImagesInBytes, inputName }) =
     const [profileImage, setProfileImage] = React.useState(null)
     const [profileImageSize, setProfileImageSize] = React.useState(0)
     const [profileImageTooBig, setProfileImageTooBig] = React.useState(false)
+
     let maxSizeForImagesInMB = bytesToMegabytes(maxSizeForImagesInBytes)
     let isImageTooBigStyles = profileImageTooBig ? `text-red-500` : undefined
+
+
 
 
     const onImageChange = (event) => {
@@ -24,6 +27,8 @@ const FileInputContainer = ({ titleText, maxSizeForImagesInBytes, inputName }) =
         setProfileImageTooBig(event.target.files[0].size > maxSizeForImagesInBytes ? true : false)
     }
 
+
+    
 
     return (
         <div>

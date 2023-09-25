@@ -7,15 +7,16 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    PieChart, Pie,
-    BarChart, Bar, Cell, Legend,
+    PieChart,
+    Pie,
+    BarChart,
+    Bar,
+    Legend,
   } from 'recharts';
 
 
 
-
-
-// put all the charts here
+// put all the charts for the stats page here
 const StatsChartContainer = ({selectedChart, chartData}) => {
     let chartHeightInPixels = 450
 
@@ -25,7 +26,7 @@ const StatsChartContainer = ({selectedChart, chartData}) => {
         {chartData.popularCategories.length < 1 && selectedChart === "mostPopularCategories" && <h2 className=" text-3xl text-center my-12">No data available...</h2>}
         {selectedChart === "mostPopularCategories" && chartData.popularCategories.length > 0 ? 
             (
-                <div className=""> 
+                <div> 
                     <ResponsiveContainer width='100%' height={chartHeightInPixels}>
                         <PieChart  height={chartHeightInPixels}>
                             <Pie

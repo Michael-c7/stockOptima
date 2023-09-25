@@ -11,7 +11,13 @@ const Sidebar = ({ sidebarNavItems }) => {
       {sidebarNavItems.map(({text, path, icon}, index) => {
         let currentUrl = location.pathname
 
-        // this variable checks if the current url is equal to the path(of the route). the reason theirs two /dashboards is because the addProducts url is /dashboard and the rest are their respective routes so /dashboard/ExampleRoute and the route for the addProduct is ""
+        /* 
+        This variable checks if the current url is 
+        equal to the path(of the route). the reason theirs
+        two /dashboards is because the addProducts url is /dashboard
+        and the rest are their respective routes so /dashboard/ExampleRoute
+        and the route for the addProduct is "" 
+        */
         const isCurrentPathSelected = (currentUrl.replace(currentUrl.length > 10 ? "/dashboard/" : "/dashboard", "") === path) && "text-green-500";
 
         return (

@@ -1,14 +1,11 @@
-import { useState } from 'react'
-import { Dialog } from '@headlessui/react'
-import { Form } from 'react-router-dom'
-
-
+import { Dialog } from "@headlessui/react"
+import { Form } from "react-router-dom"
 
 
 const DeleteProductModal = ({ isDeleteProductModalOpen, setDeleteProductModalIsOpen, _id }) => {
   
   return (
-    <Dialog open={isDeleteProductModalOpen} onClose={() => setDeleteProductModalIsOpen(false)} className="relative z-50 text-center ">
+    <Dialog open={isDeleteProductModalOpen} onClose={() => setDeleteProductModalIsOpen(false)} className="relative z-50 text-center">
       {/* The backdrop, rendered as a fixed sibling to the panel container */}
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
@@ -20,9 +17,9 @@ const DeleteProductModal = ({ isDeleteProductModalOpen, setDeleteProductModalIsO
           <Dialog.Description className="my-4 text-gray-600">
           Are you sure you want to delete this product?
           </Dialog.Description>
-          <Form className='space-x-4' method='post' action={`../deleteProduct/${_id}`}>
-            <button className='btn-main bg-red-500' type='submit'>Delete</button>
-            <button className='btn-main bg-blue-500' type="button" onClick={() => setDeleteProductModalIsOpen(false)}>Cancel</button>
+          <Form className="space-x-4" method="post" action={`../deleteProduct/${_id}`}>
+            <button className="btn-main bg-red-500" type="submit">Delete</button>
+            <button className="btn-main bg-blue-500" type="button" onClick={() => setDeleteProductModalIsOpen(false)}>Cancel</button>
           </Form>
         </Dialog.Panel>
       </div>

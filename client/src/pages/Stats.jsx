@@ -10,7 +10,6 @@ import {
 import { HiChevronUpDown } from "react-icons/hi2"
 
 
-import { addCommasToNumber, truncateStringWithEllipsis } from '../../utils/misc'
 import { useLoaderData } from 'react-router-dom';
 import { Listbox, Transition } from '@headlessui/react'
 import customFetch from "../../utils/customFetch"

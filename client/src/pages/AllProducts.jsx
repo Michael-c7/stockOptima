@@ -11,6 +11,9 @@ import { toast } from 'react-toastify'
 import SearchContainer from '../../components/SearchContainer'
 import ProductContainer from '../../components/ProductContainer'
 
+
+
+
 const AllProductsContext = createContext()
 export const loader = async ({ request }) => {
   const params = Object.fromEntries([
@@ -39,6 +42,7 @@ const AllProducts = () => {
   const {search, pathname} = useLocation()
   const navigate = useNavigate()
 
+  
   const handlePageChange = (pageNumber) => {
     // reconstruct the url w/ our sort, filters and path now with the page add onto that to make a request to the server /w all my other stuff still intact
     const searchParams = new URLSearchParams(search)
@@ -47,7 +51,8 @@ const AllProducts = () => {
   }
 
   
-  // to fix the search input need to provide the defaultValue for the search from the actual searchValue from the server not the controlled input/ react use state. so right now creating the context to pass the search values down to the searchContainer for the search bar input as defaultValue
+  let prevPageLogic = currentPage <= 1 ? 1 : currentPage - 1
+  let nextPageLogic = currentPage >= numOfPages ? numOfPages : currentPage + 1
 
 
   return (
@@ -82,13 +87,15 @@ const AllProducts = () => {
               <p>Showing 1 - {products.length} of {totalProducts} entries</p>
               {numOfPages > 1 && (
                 <div className='flex flex-row items-center'>
-                  <button className='text-2xl bg-gray-100 mr-2 rounded' onClick={() => handlePageChange(currentPage <= 1 ? 1 : currentPage - 1)}><HiChevronLeft/></button>
+                  {/* prev page button */}
+                  <button className='text-2xl bg-gray-100 mr-2 rounded' onClick={() => handlePageChange(prevPageLogic)}><HiChevronLeft/></button>
                   {numOfPagesArr.map((_, index) => {
                     return (
                       <button key={index} className={`mx-1 px-2 hover:bg-gray-100 rounded ${currentPage === (index + 1) && "bg-green-500 text-white hover:bg-green-500"}`} onClick={() => handlePageChange(index + 1)}>{index + 1}</button>
                     )
                   })}
-                  <button className='text-2xl bg-gray-100 ml-2 rounded' onClick={() => handlePageChange(currentPage >= numOfPages ? numOfPages : currentPage + 1)}><HiChevronRight/></button>
+                  {/* next page button */}
+                  <button className='text-2xl bg-gray-100 ml-2 rounded' onClick={() => handlePageChange(nextPageLogic)}><HiChevronRight/></button>
                 </div>
               )}
             </footer>

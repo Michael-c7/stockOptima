@@ -10,18 +10,10 @@ import RangeInput from './RangeInput'
 import CombinedSearchInput from './CombinedSearchInput'
 
 import { Form, useSubmit, Link } from 'react-router-dom'
-import SubmitBtn from './SubmitBtn'
 
 
 
 const SearchContainer = ({ products, maxValuesForFilters }) => {
-  let searchCategories = [
-    "name",
-    "category",
-    "location",
-    "sku",
-    "description",
-  ]
   const [searchInput, setSearchInput] = React.useState("")
 
   const [priceInput, SetPriceInput] = React.useState(0)
@@ -31,17 +23,6 @@ const SearchContainer = ({ products, maxValuesForFilters }) => {
   const [sortInput, setSortInput] = React.useState("newest")
 
   const submit = useSubmit()
-
-  const debounce = (onChange) => {
-    let timeout;
-    return (e) => {
-      const form = e.currentTarget.form;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        onChange(form);
-      }, 2000);
-    }
-  }
 
   React.useEffect(() => {
     submit({
