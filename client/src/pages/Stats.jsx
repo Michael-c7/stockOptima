@@ -39,7 +39,6 @@ export const loader = async () => {
 
 const Stats = () => {
   const { defaultStats, chartData } = useLoaderData()
-  // console.log({defaultStats, chartData} )
 
   const cardInfo = [
     {
@@ -64,23 +63,8 @@ const Stats = () => {
     },
   ]
 
+
   const statOptions = [
-    {
-      text:"Top 5 Categories",
-    },
-    {
-      text:"Monthly Products",
-    },
-    {
-      text:"Price Breakdowns",
-    },
-    {
-      text:"Highest Quantity products",
-    }
-  ]
-
-
-  const people = [
     { 
       name: 'Most popular Categories',
       text: "mostPopularCategories",
@@ -101,7 +85,7 @@ const Stats = () => {
   ]
 
 
-  let [selected, setSelected] = useState(people[0])
+  let [selected, setSelected] = useState(statOptions[0])
 
   // console.log(selected)
 
@@ -116,11 +100,10 @@ const Stats = () => {
         })}
       </div>
 
-      <div className=''>
-        <div className=''>
-          <h2 className='text-center text-3xl  mt-16'>{selected.name}</h2>
-          {/* <div>put select from headless ui here / listbox</div> */}
-            <Listbox value={selected} onChange={setSelected} className="w-72 m-auto  z-40">
+      <div>
+        <div>
+          <h2 className='text-center text-3xl mt-16'>{selected.name}</h2>
+            <Listbox value={selected} onChange={setSelected} className="w-72 m-auto z-40">
               <div className="relative my-4">
                 <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-green-300 sm:text-sm">
                   <span className="block truncate">{selected.name}</span>
@@ -138,15 +121,15 @@ const Stats = () => {
                   leaveTo="opacity-0"
                 >
                   <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                    {people.map((person, personIdx) => (
+                    {statOptions.map((statCategory, statCategoryId) => (
                       <Listbox.Option
-                        key={personIdx}
+                        key={statCategoryId}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
                             active ? 'bg-green-100 text-green-900' : 'text-gray-900'
                           }`
                         }
-                        value={person}
+                        value={statCategory}
                       >
                         {({ selected }) => (
                           <>
@@ -155,7 +138,7 @@ const Stats = () => {
                                 selected ? 'font-medium' : 'font-normal'
                               }`}
                             >
-                              {person.name}
+                              {statCategory.name}
                             </span>
                             {selected ? (
                               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-green-600">
@@ -175,8 +158,6 @@ const Stats = () => {
             <StatsChartContainer {...{selectedChart:selected.text, chartData}}/>
         </div>
       </div>
-
-      
     </section>
   )
 }
