@@ -61,7 +61,7 @@ const SearchContainer = ({ products, maxValuesForFilters }) => {
         <div className='flex  justify-between items-center space-x-4'>
           <div className='flex items-center border rounded border-gray-200 p-2 rounded-r-none flex-1'>
             <FiSearch className='text-gray-400 mr-1 relative'/>
-            <input type="text" placeholder='Search' id="search" name="search" className='w-full outline-0'   value={searchInput} onChange={(e) => setSearchInput(e.target.value)}/>
+            <input type="search" placeholder='Search' id="search" name="search" className='w-full outline-0'   value={searchInput} onChange={(e) => setSearchInput(e.target.value)}/>
           </div>
           <Link to="/dashboard/allProducts" className='btn-main py-2 px-3' onClick={() => setSearchInput("")}>Reset all values</Link>
         </div>
