@@ -87,7 +87,6 @@ const Stats = () => {
 
   let [selected, setSelected] = useState(statOptions[0])
 
-  // console.log(selected)
 
 
   return (
@@ -131,20 +130,11 @@ const Stats = () => {
                         }
                         value={statCategory}
                       >
-                        {({ selected }) => (
+                        {() => (
                           <>
-                            <span
-                              className={`block truncate ${
-                                selected ? 'font-medium' : 'font-normal'
-                              }`}
-                            >
+                            <span className="block truncate">
                               {statCategory.name}
                             </span>
-                            {selected ? (
-                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-green-600">
-                                <HiCheck className="h-5 w-5" aria-hidden="true" />
-                              </span>
-                            ) : null}
                           </>
                         )}
                       </Listbox.Option>
