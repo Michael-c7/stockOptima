@@ -23,7 +23,7 @@ const Navbar = ({ user, logoutUser, sidebarNavItems }) => {
         <HiMenu/>
       </Menu.Button>
 
-      <Menu.Items className="absolute bg-white flex flex-col drop-shadow z-10 left-0 top-0 w-full h-full p-4">
+      <Menu.Items className="absolute bg-white flex flex-col drop-shadow z-40 left-0 top-0 w-full h-full p-4">
         {/* Close button for mobile menu */}
         <Menu.Item className="ml-auto">
         {({ close }) => (
