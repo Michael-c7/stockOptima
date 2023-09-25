@@ -22,8 +22,6 @@ const SearchContainer = ({ products, maxValuesForFilters }) => {
     "sku",
     "description",
   ]
-
-
   const [searchInput, setSearchInput] = React.useState("")
 
   const [priceInput, SetPriceInput] = React.useState(0)
@@ -32,8 +30,18 @@ const SearchContainer = ({ products, maxValuesForFilters }) => {
 
   const [sortInput, setSortInput] = React.useState("newest")
 
-
   const submit = useSubmit()
+
+  const debounce = (onChange) => {
+    let timeout;
+    return (e) => {
+      const form = e.currentTarget.form;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        onChange(form);
+      }, 2000);
+    }
+  }
 
   React.useEffect(() => {
     submit({
@@ -43,7 +51,7 @@ const SearchContainer = ({ products, maxValuesForFilters }) => {
       quantity:quantityInput,
       value:valueInput,
     })
-  }, [searchInput, sortInput, priceInput, quantityInput, valueInput])
+  }, [submit, searchInput, sortInput, priceInput, quantityInput, valueInput])
 
 
 
@@ -53,7 +61,7 @@ const SearchContainer = ({ products, maxValuesForFilters }) => {
         <div className='flex  justify-between items-center space-x-4'>
           <div className='flex items-center border rounded border-gray-200 p-2 rounded-r-none flex-1'>
             <FiSearch className='text-gray-400 mr-1 relative'/>
-            <input placeholder='Search' name="search" className='w-full outline-0' defaultValue={searchInput} onChange={(e) => setSearchInput(e.target.value)}/>
+            <input type="text" placeholder='Search' id="search" name="search" className='w-full outline-0'   value={searchInput} onChange={(e) => setSearchInput(e.target.value)}/>
           </div>
           <Link to="/dashboard/allProducts" className='btn-main py-2 px-3' onClick={() => setSearchInput("")}>Reset all values</Link>
         </div>

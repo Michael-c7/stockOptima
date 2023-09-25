@@ -1,4 +1,4 @@
-import React from 'react'
+import { useContext, createContext } from 'react';
 import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom'
 
 import {
@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import SearchContainer from '../../components/SearchContainer'
 import ProductContainer from '../../components/ProductContainer'
 
-
+const AllProductsContext = createContext()
 export const loader = async ({ request }) => {
   const params = Object.fromEntries([
     ...new URL(request.url).searchParams.entries(),
@@ -46,9 +46,12 @@ const AllProducts = () => {
     navigate(`${pathname}?${searchParams.toString()}`)
   }
 
+  
+  // to fix the search input need to provide the defaultValue for the search from the actual searchValue from the server not the controlled input/ react use state. so right now creating the context to pass the search values down to the searchContainer for the search bar input as defaultValue
+
 
   return (
-    <>
+    <AllProductsContext.Provider value={{data, searchValues}}>
         <section className='bg-white p-4 overflow-auto h-full'>
           <SearchContainer products={products} maxValuesForFilters={maxValuesForFilters}/>      
           {products.length > 0 ? (
@@ -94,8 +97,11 @@ const AllProducts = () => {
             <h2 className='text-4xl my-4'>No products to show...</h2>
           )}
       </section>
-    </>
+    </AllProductsContext.Provider>
   )
 }
 
 export default AllProducts
+
+
+export const useAllProductsContext = () => useContext(AllProductsContext);
