@@ -33,7 +33,7 @@ export const authenticateUser = (req, res, next) => {
 
 
 
-  export const checkForDemoUser = (req, res) => {
+  export const checkForDemoUser = (req, res, next) => {
     if(req.user.demoUser) throw new BadRequestError("Demo user. Read only")
     next()
   }
