@@ -15,7 +15,7 @@ import defaultUserImage from "../src/assets/images/default-user.jpg"
 const Navbar = ({ user, logoutUser, sidebarNavItems }) => {
 
   return (
-    <nav className="bg-white border-b-2 flex min-[320px]:flex-row flex-col justify-between items-center px-4 min-[320px]:z-auto z-10">
+    <nav className="bg-white border-b-2 flex min-[320px]:flex-row flex-col justify-between items-center p-4 min-[320px]:z-auto z-10">
     {/* mobile navbar */}
     <Menu>
       {/* Open button for mobile menu */}

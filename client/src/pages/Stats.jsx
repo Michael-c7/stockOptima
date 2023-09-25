@@ -103,7 +103,7 @@ const Stats = () => {
       <div>
         <div>
           <h2 className='text-center text-3xl mt-16'>{selected.name}</h2>
-            <Listbox value={selected} onChange={setSelected} className="w-72 m-auto z-40">
+            <Listbox value={selected} onChange={setSelected} className="w-72 m-auto z-30">
               <div className="relative my-4">
                 <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-green-300 sm:text-sm">
                   <span className="block truncate">{selected.name}</span>
@@ -154,7 +154,7 @@ const Stats = () => {
               </div>
             </Listbox>
         </div>
-        <div className='relative'>
+        <div className='relative w-full'>
             <StatsChartContainer {...{selectedChart:selected.text, chartData}}/>
         </div>
       </div>

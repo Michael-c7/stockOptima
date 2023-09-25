@@ -25,7 +25,7 @@ const StatsChartContainer = ({selectedChart, chartData}) => {
         {chartData.popularCategories.length < 1 && selectedChart === "mostPopularCategories" && <h2 className=" text-3xl text-center my-12">No data available...</h2>}
         {selectedChart === "mostPopularCategories" && chartData.popularCategories.length > 0 ? 
             (
-                <div className="w-[98%] relative ml-[1%]">
+                <div className=""> 
                     <ResponsiveContainer width='100%' height={chartHeightInPixels}>
                         <PieChart  height={chartHeightInPixels}>
                             <Pie
@@ -49,7 +49,7 @@ const StatsChartContainer = ({selectedChart, chartData}) => {
         {chartData.productsCreatedByMonth.length < 1 && selectedChart === "monthlyProducts" && <h2 className=" text-3xl text-center my-12">No data available...</h2>}
         {selectedChart === "monthlyProducts" && chartData.productsCreatedByMonth.length > 0 ? 
             (
-                <div className="w-[98%] relative ml-[1%]">
+                <div className="w-full relative">
                     <ResponsiveContainer width='100%' height={chartHeightInPixels}>
                         <AreaChart data={chartData.productsCreatedByMonth} margin={{ top: 50 }}>
                             <CartesianGrid strokeDasharray='3 3' />
@@ -72,7 +72,7 @@ const StatsChartContainer = ({selectedChart, chartData}) => {
         {chartData.highestQuantityProducts.length < 1 && selectedChart === "highestQuantityProducts" && <h2 className=" text-3xl text-center my-12">No data available...</h2>}
         {selectedChart === "highestQuantityProducts" && chartData.highestQuantityProducts.length > 0 ? 
         (
-            <div className="w-[98%] relative ml-[1%]">
+            <div className="w-full relative">
                 <ResponsiveContainer width='100%' height={chartHeightInPixels}>
                     <BarChart width={150} height={40} data={chartData.highestQuantityProducts}>
                     <XAxis dataKey="name" />
@@ -93,7 +93,7 @@ const StatsChartContainer = ({selectedChart, chartData}) => {
         {chartData.lowestQuantityProducts.length < 1 && selectedChart === "lowestQuantityProducts" && <h2 className=" text-3xl text-center my-12">No data available...</h2>}
         {selectedChart === "lowestQuantityProducts" && chartData.lowestQuantityProducts.length > 0 ? 
         (
-            <div className="w-[98%] relative ml-[1%]">
+            <div className="w-full relative">
                 <ResponsiveContainer width='100%' height={chartHeightInPixels}>
                     <BarChart width={150} height={40} data={chartData.lowestQuantityProducts}>
                     <XAxis dataKey="name" />

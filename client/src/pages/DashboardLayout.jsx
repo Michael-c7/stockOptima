@@ -19,9 +19,7 @@ export const loader = async () => {
   }
 }
 
-import avatarImg from "../assets/images/avatar-1.jpg"
 import Navbar from "../../components/Navbar";
-
 import Sidebar from "../../components/Sidebar.jsx"
 
 
@@ -70,11 +68,11 @@ const DashboardLayout = () => {
       logoutUser,
     }}
   >
-    <div className="grid grid-rows-[100px_minmax(800px,_1fr)] h-screen">
+    <div className="grid grid-rows-[auto_minmax(400px,_1fr)] min-h-screen">
       <Navbar user={user} logoutUser={logoutUser} sidebarNavItems={sidebarNavItems}/>
-      <div className="flex flex-row">
+      <div className="grid sm:grid-cols-[auto_minmax(800px,_1fr)] grid-cols-1 ">
         <Sidebar sidebarNavItems={sidebarNavItems}/>         
-        <main className="bg-gray-100 w-full p-4">
+        <main className="bg-gray-100 p-4">
           <Outlet context={{ user }}/>
         </main>
       </div>
