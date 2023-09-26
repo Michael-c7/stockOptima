@@ -1,4 +1,4 @@
-# My Awesome Project
+# Stock Optima
 A full-stack Inventory management application that allows users to create products displayed in a table layout with search and filter functionality,  a stats page to give you a breakdown of all your products, and a profile page where you can update your name, profile image, and email address!
 
 [Live Site and demo account](https://stockoptima.onrender.com/)
