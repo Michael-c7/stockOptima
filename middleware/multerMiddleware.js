@@ -2,6 +2,12 @@ import multer from 'multer';
 import DataParser from "datauri/parser.js"
 import path from "path"
 
+/*
+this middleware is for file upload,
+more specifically its to have the
+ability to upload an image file for the users profile
+*/
+
 const storage = multer.memoryStorage()
 
 const upload = multer({ storage });

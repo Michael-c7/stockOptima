@@ -31,7 +31,7 @@ cloudinary.config({
 });
 
 
-
+// represent the directory name of the current module
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
@@ -39,8 +39,11 @@ if(process.env.NODE_ENV === "development") {
     app.use(morgan("dev"))
 }
 
+// middleware to server static assets (images, stylesheets, ect) to the frontend
 app.use(express.static(path.resolve(__dirname, './client/dist')));
+// parse cookies so you can use in your app
 app.use(cookieParser())
+// automatically parse incoming JSON requests
 app.use(express.json())
 
 
@@ -68,7 +71,10 @@ app.use("/api/v1/users", authenticateUser, userRouter)
 app.use("/api/v1/auth", authRouter)
 
 
-
+/* 
+This is a fallback route that lets
+the client side take control of the routing
+*/
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, './client/dist', 'index.html'));
 });
@@ -88,7 +94,7 @@ app.use(errorHandleMiddleware)
 
 const port = process.env.PORT || 5100
 
-
+// connect to the MongoDb database and start the express server
 try {
     await mongoose.connect(process.env.MONGO_URL)
     app.listen(port, () => {
@@ -98,6 +104,4 @@ try {
     console.log(error)
     process.exit(1)
 }
-
-
 

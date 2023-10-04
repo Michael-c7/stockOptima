@@ -26,7 +26,7 @@ export const authenticateUser = (req, res, next) => {
       if(!roles.includes(req.user.role)) {
         throw new UnauthorizedError("unauthorized to access this route")
       }
-      console.log(roles)
+      // console.log(roles)
       next()
     } 
   }

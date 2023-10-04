@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 
 export const hashPassword = async (password) => {
-    // a random value that is added to the password before hashing
+    // salt is a random value that is added to the password before hashing to make it more secure
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt); // bigger the value, more secure but will take longer to hash it
     return hashedPassword
