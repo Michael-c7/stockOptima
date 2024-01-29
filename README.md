@@ -3,6 +3,8 @@ A full-stack Inventory management application that allows users to create produc
 
 [Live Site and demo account](https://stockoptima.onrender.com/)
 
+NOTE: Site can take up to 30 seconds to initially load because I'm using a free instance to host stockOptima
+
 [![stock-Optima-Gif.gif](https://i.postimg.cc/RZJY6Y9Z/stock-Optima-Gif.gif)](https://postimg.cc/9DVbsJr6)
 
 ## How It's Made:
